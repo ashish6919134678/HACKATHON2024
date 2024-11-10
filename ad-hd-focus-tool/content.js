@@ -1,4 +1,4 @@
-// Check if WebGazer is loaded and start gaze tracking
+// Initialize WebGazer and start gaze tracking
 function initializeEyeTracking() {
   if (typeof webgazer === "undefined") {
     console.error("WebGazer failed to load.");
@@ -56,13 +56,5 @@ function focusOnParagraph(paragraph) {
   paragraph.classList.add("focus-paragraph");
 }
 
-// Load WebGazer and initialize
-function loadWebGazer() {
-  const script = document.createElement("script");
-  script.src = "webgazer.min.js"; // Use local file if downloaded, or CDN link if preferred
-  script.onload = initializeEyeTracking;
-  document.head.appendChild(script);
-}
-
-// Call function to load WebGazer
-loadWebGazer();
+// Start WebGazer directly since it's already loaded as part of the extension
+initializeEyeTracking();
