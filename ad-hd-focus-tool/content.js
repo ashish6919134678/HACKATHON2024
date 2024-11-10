@@ -1,3 +1,9 @@
+// Include localforage library
+const script = document.createElement("script");
+script.src =
+  "https://cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js";
+document.head.appendChild(script);
+
 // Start WebGazer and check if it can access the webcam
 function startWebGazer() {
   if (typeof webgazer === "undefined") {
@@ -6,13 +12,8 @@ function startWebGazer() {
   }
 
   // Enable individual display settings for testing
-  try {
-    webgazer.showVideo(true); // Show webcam video feed
-    webgazer.showFaceOverlay(true); // Show face overlay
-    webgazer.showGazeDot(true); // Show gaze dot
-  } catch (error) {
-    console.error("Error enabling display settings:", error);
-  }
+  webgazer.showVideo(true);
+  webgazer.showFaceOverlay(true);
 
   // Error handling for camera access
   webgazer.OnCamDenied = function () {
@@ -89,10 +90,11 @@ function addCalibrationPoints() {
     target.style.height = "20px";
     target.style.backgroundColor = "red";
     target.style.borderRadius = "50%";
+    target.style.zIndex = "1000"; // Ensures visibility on top of other elements
     document.body.appendChild(target);
 
     target.addEventListener("click", () => {
-      target.style.backgroundColor = "green";
+      target.style.backgroundColor = "green"; // Visual feedback on click
       setTimeout(() => document.body.removeChild(target), 500);
     });
   });
@@ -158,7 +160,7 @@ document.addEventListener("click", function (event) {
   }
 });
 
-// Start WebGazer initialization
+// Start WebGazer initialization and calibration
 startWebGazer();
 
 /*
