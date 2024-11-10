@@ -1,11 +1,22 @@
+/* Styles for blur and focus effects */
 .blur-paragraph {
-  filter: blur(3px);
-  color: rgba(0, 0, 0, 0.4);
+  filter: blur(5px); /* Adjust the blur intensity */
+  opacity: 0.3; /* Optional: Reduce opacity for blurred paragraphs */
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
 .focus-paragraph {
-  background-color: #fff;
-  color: #000;
-  font-weight: bold;
-  z-index: 1001;
+  filter: none;
+  opacity: 1;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Optional: Style for the gaze dot */
+#gaze-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 1000;
 }
