@@ -1,18 +1,36 @@
-// Initialize WebGazer and define tracking functions
+// Check if WebGazer is loaded and start gaze tracking
 function initializeEyeTracking() {
-  // Start WebGazer
+  if (typeof webgazer === "undefined") {
+    console.error("WebGazer failed to load.");
+    return;
+  }
+
+  // Start WebGazer and set gaze listener
   webgazer
     .setGazeListener((data, elapsedTime) => {
       if (data) {
         const gazeX = data.x;
         const gazeY = data.y;
+        console.log(
+          "Gaze coordinates:",
+          gazeX,
+          gazeY,
+          "Elapsed time:",
+          elapsedTime
+        );
+
+        // Call function to handle gaze focus
         handleGaze(gazeX, gazeY);
+      } else {
+        console.log("No gaze data received.");
       }
     })
     .begin();
+
+  console.log("WebGazer initialized successfully.");
 }
 
-// Handle gaze data by checking if it's focused on a specific paragraph
+// Function to apply focus based on gaze coordinates
 function handleGaze(gazeX, gazeY) {
   const paragraphs = document.querySelectorAll("p");
 
@@ -29,34 +47,22 @@ function handleGaze(gazeX, gazeY) {
   });
 }
 
-// Function to set focus on a paragraph
+// Function to set focus on a specific paragraph
 function focusOnParagraph(paragraph) {
   document
     .querySelectorAll("p")
     .forEach((p) => p.classList.add("blur-paragraph"));
   paragraph.classList.remove("blur-paragraph");
   paragraph.classList.add("focus-paragraph");
-
-  // Set current focused paragraph
-  currentFocus = paragraph;
 }
 
-// Add event listener for double-click to refocus on a paragraph
-document.addEventListener("dblclick", function (event) {
-  if (event.target.tagName === "P") {
-    focusOnParagraph(event.target);
-  }
-});
+// Load WebGazer and initialize
+function loadWebGazer() {
+  const script = document.createElement("script");
+  script.src = "webgazer.min.js"; // Use local file if downloaded, or CDN link if preferred
+  script.onload = initializeEyeTracking;
+  document.head.appendChild(script);
+}
 
-// Add text-to-speech functionality
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("focus-paragraph")) {
-    const text = event.target.innerText;
-    if (!speechSynthesis.speaking) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      speechSynthesis.speak(utterance);
-    } else {
-      speechSynthesis.cancel();
-    }
-  }
-});
+// Call function to load WebGazer
+loadWebGazer();

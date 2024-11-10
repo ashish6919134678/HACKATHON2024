@@ -1,5 +1,6 @@
-.dimmed *:not(.focus-paragraph) {
-  filter: blur(5px);
+.blur-paragraph {
+  filter: blur(3px);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .focus-paragraph {
@@ -7,9 +8,4 @@
   color: #000;
   font-weight: bold;
   z-index: 1001;
-}
-
-.blur-paragraph {
-  filter: blur(3px);
-  color: rgba(0, 0, 0, 0.4);
 }
