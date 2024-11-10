@@ -1,0 +1,17 @@
+.dimmed::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.focus-paragraph {
+  position: relative;
+  background: #fff;
+  z-index: 1001; /* keeps paragraph visible */
+}

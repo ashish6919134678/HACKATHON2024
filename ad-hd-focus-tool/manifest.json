@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "ADHD Focus Tool",
+  "version": "1.0",
+  "description": "Assist ADHD users by keeping focus on the active paragraph.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
