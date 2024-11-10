@@ -1,40 +1,43 @@
-// Load GazeCloudAPI
-GazeCloudAPI.StartEyeTracking();
+// Initialize WebGazer and define tracking functions
+function initializeEyeTracking() {
+  // Start WebGazer
+  webgazer
+    .setGazeListener((data, elapsedTime) => {
+      if (data) {
+        const gazeX = data.x;
+        const gazeY = data.y;
+        handleGaze(gazeX, gazeY);
+      }
+    })
+    .begin();
+}
 
-let currentFocus = null;
-const speechSynthesis = window.speechSynthesis;
-
-// Initialize eye tracking and apply blur to all paragraphs except the focused one
-GazeCloudAPI.OnGaze = function (gazeData) {
+// Handle gaze data by checking if it's focused on a specific paragraph
+function handleGaze(gazeX, gazeY) {
   const paragraphs = document.querySelectorAll("p");
 
   paragraphs.forEach((paragraph) => {
     const rect = paragraph.getBoundingClientRect();
-
-    // Check if gaze is within the paragraph bounds
     if (
-      gazeData.GazeX >= rect.left &&
-      gazeData.GazeX <= rect.right &&
-      gazeData.GazeY >= rect.top &&
-      gazeData.GazeY <= rect.bottom
+      gazeX >= rect.left &&
+      gazeX <= rect.right &&
+      gazeY >= rect.top &&
+      gazeY <= rect.bottom
     ) {
-      if (currentFocus !== paragraph) {
-        focusOnParagraph(paragraph);
-      }
+      focusOnParagraph(paragraph);
     }
   });
-};
+}
 
 // Function to set focus on a paragraph
 function focusOnParagraph(paragraph) {
-  // Blur all paragraphs except the focused one
-  document.querySelectorAll("p").forEach((p) => {
-    p.classList.add("blur-paragraph");
-  });
+  document
+    .querySelectorAll("p")
+    .forEach((p) => p.classList.add("blur-paragraph"));
   paragraph.classList.remove("blur-paragraph");
   paragraph.classList.add("focus-paragraph");
 
-  // Update current focused paragraph
+  // Set current focused paragraph
   currentFocus = paragraph;
 }
 
@@ -57,16 +60,3 @@ document.addEventListener("click", function (event) {
     }
   }
 });
-
-/*
-Explanation of content.js
-Eye-Tracking: GazeCloudAPI.OnGaze listens for gaze events, checking if the gaze coordinates are within the bounds of each paragraph. When it detects focus on a paragraph, it calls focusOnParagraph.
-
-Focus and Blur Logic:
-
-focusOnParagraph applies a blur effect to all paragraphs except the currently focused one. It uses CSS classes to add and remove blurring.
-Double-Click Event for Refocusing: When a user double-clicks on a paragraph, it sets that paragraph as the focused one, removing the blur effect.
-
-Text-to-Speech: When the user single-clicks on the focused paragraph, the paragraph text is read aloud using the browser's speechSynthesis API. If the user clicks again during reading, it stops.
-
-*/
