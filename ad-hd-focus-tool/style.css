@@ -1,4 +1,13 @@
+
+
+
+
+
+/*
+
+
 /* Styles for blur and focus effects */
+
 .blur-paragraph {
   filter: blur(5px); /* Adjust the blur intensity */
   opacity: 0.3; /* Optional: Reduce opacity for blurred paragraphs */
@@ -19,4 +28,5 @@
   background-color: red;
   border-radius: 50%;
   z-index: 1000;
-}
+}*/
+*/

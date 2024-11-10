@@ -204,4 +204,3 @@ function addCalibrationPoints() {
 initializeEyeTracking();
 // Uncomment this to run calibration only once for initial setup
 addCalibrationPoints();
-
